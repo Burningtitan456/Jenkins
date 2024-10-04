@@ -1,10 +1,5 @@
 pipeline{
     agent any
-    environment {
-        DIRECTORY_PATH= "Documents/Code"
-        TESTING_ENVIRONMENT= "Test"
-        PRODUCTION_ENVIRONMENT= "Taine"
-    }
     stages{
         stage('Build'){
             steps{
@@ -29,7 +24,8 @@ pipeline{
                 success {
                     emailext to: "tainemarkley@gmail.com",
                     subject: "Scan Status Email",
-                    body: "Scan was succesful!"
+                    body: "Scan was succesful!",
+                    attachLog: True
                 }
             }
         }
@@ -46,7 +42,8 @@ pipeline{
                 success{
                     emailext to: "tainemarkley@gmail.com",
                     subject: "Test Status Email",
-                    body: "Test was successful!"
+                    body: "Test was successful!",
+                    attachLog: True
                 }
             }
         }
