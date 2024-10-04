@@ -8,34 +8,51 @@ pipeline{
     stages{
         stage('Build'){
             steps{
-                echo "fetch the source code from the directory path specified by the $PRODUCTION_ENVIRONMENT"
-                echo "compile the code and generate any necessary artifacts"
+                echo "compile and package code with Maven"
             }
         }
         stage('Test'){
             steps{
-                echo "unit tests"
-                echo "integration tests"
+                echo "Run unit tests with Mocha"
             }
         }
-        stage('Code Quality Check'){
+        stage('Analyse'){
             steps{
-                echo "check the quality of the code"
+                echo "Analyse code using SonarQube"
             }
         }
-        stage('Deploy'){
+        stage('Scan'){
             steps{
-                echo "deploy the application to a testing environment specified by the $PRODUCTION_ENVIRONMENT"
+                echo "Perform security scan using Nessus"
+            }
+            post{
+                success {
+                    mail to: "tainemarkley@gmail.com",
+                    subject: "Scan Status Email",
+                    body: "Scan was succesful!"
+                }
             }
         }
-        stage('Approval'){
+        stage('DeployStage'){
             steps{
-                sleep 10
+                echo "Deploy application to staging server"
             }
         }
-        stage('Deploy to Production'){
+        stage('Test'){
             steps{
-                echo "Deploy code to $PRODUCTION_ENVIRONMENT"
+                echo "Run integration tests"
+            }
+            post{
+                success{
+                    mail to: "tainemarkley@gmail.com",
+                    subject: "Test Status Email",
+                    body: "Test was successful!"
+                }
+            }
+        }
+        stage('DeployProduction'){
+            steps{
+                echo "Deploy to production server"
             }
         }
     }
