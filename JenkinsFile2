@@ -29,8 +29,7 @@ pipeline{
                 success {
                     emailext to: "tainemarkley@gmail.com",
                     subject: "Scan Status Email",
-                    body: "Scan was succesful!",
-                    emailext attachLog
+                    body: "Scan was succesful!"
                 }
             }
         }
@@ -47,8 +46,7 @@ pipeline{
                 success{
                     emailext to: "tainemarkley@gmail.com",
                     subject: "Test Status Email",
-                    body: "Test was successful!",
-                    emailext attachLog
+                    body: "Test was successful!"
                 }
             }
         }
